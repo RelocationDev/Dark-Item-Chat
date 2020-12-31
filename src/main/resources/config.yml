@@ -1,0 +1,12 @@
+#
+#  DarkItemChat
+#  config.yml
+#
+
+item-chat-message: "[item]"
+
+permission:
+  enabled: false
+  node: "darkitemchat.use"
+  denied:
+    - "&cNo permission"

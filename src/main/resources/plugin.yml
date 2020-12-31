@@ -1,0 +1,4 @@
+name: DarkItemChat
+version: ${project.version}
+main: com.darkservices.darkitemchat.Main
+description: An advanced item chat plugin
