@@ -4,6 +4,7 @@ import com.darkservices.darkitemchat.Main;
 import com.darkservices.darkitemchat.util.Methods;
 import com.darkservices.darkitemchat.util.ReflectionUtil;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,6 +51,8 @@ public class ChatListener implements Listener {
         } else {
             itemName = p.getItemInHand().getItemMeta().getDisplayName();
         }
-        methods.sendItemTooltipMessage(p, itemName, item);
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            methods.sendItemTooltipMessage(online, itemName, item);
+        }
     }
 }
