@@ -41,6 +41,7 @@ public class ChatListener implements Listener {
         if (!msg.equals(plugin.getConfig().getString("item-chat-message"))) {
             return;
         }
+        e.setCancelled(true);
         ItemStack item = p.getItemInHand();
         String itemName;
         if (p.getItemInHand() == null) {
