@@ -3,7 +3,9 @@
 #  config.yml
 #
 
-item-chat-message: "[item]"
+item-chat-message:
+  - "[darkitemchat]"
+  - "[item]"
 
 permission:
   enabled: false

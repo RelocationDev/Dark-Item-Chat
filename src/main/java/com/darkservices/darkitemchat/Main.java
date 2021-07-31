@@ -8,12 +8,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new ChatListener(this, new Methods()), this);
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lDark&f&lItemChat » &7DarkItemChat is enabled!"));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lDark&f&lItemChat » &7DarkItemChat has enabled!"));
     }
+
+    @Override
+    public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lDark&f&lItemChat » &7DarkItemChat has disabled!"));
+    }
+
 }

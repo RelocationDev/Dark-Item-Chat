@@ -19,41 +19,46 @@ import java.util.Locale;
 
 public class ChatListener implements Listener {
 
-    private Main plugin;
-    private Methods methods;
+    private final Main plugin;
+    private final Methods methods;
 
     public ChatListener(Main plugin, Methods methods) {
         this.plugin = plugin;
         this.methods = methods;
     }
 
-
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onChat(AsyncPlayerChatEvent e) {
-        String msg = e.getMessage();
-        Player p = e.getPlayer();
-        if (plugin.getConfig().getBoolean("permission.enabled") && !p.hasPermission(plugin.getConfig().getString("permission.node"))) {
-            for (String s : plugin.getConfig().getStringList("permission.denied")) {
-                e.getPlayer().sendMessage(methods.color(s));
-                return;
-            }
-        }
-        if (!msg.equals(plugin.getConfig().getString("item-chat-message"))) {
+    public void onChat(AsyncPlayerChatEvent event) {
+
+        Player player = event.getPlayer();
+        String msg = event.getMessage();
+
+        if (plugin.getConfig().getBoolean("permission.enabled") && !player.hasPermission(plugin.getConfig().getString("permission.node"))) {
+            plugin.getConfig().getStringList("permission.denied").forEach(s -> player.sendMessage(methods.color(s)));
             return;
         }
-        e.setCancelled(true);
-        ItemStack item = p.getItemInHand();
+
+        if (!plugin.getConfig().getString("item-chat-message").contains(msg.toLowerCase())) return;
+
+        event.setCancelled(true);
+
+        ItemStack item = player.getItemInHand();
         String itemName;
-        if (p.getItemInHand() == null) {
-            itemName = "&cHand";
+
+        if (player.getItemInHand() == null) {
+            Bukkit.getOnlinePlayers().forEach(online -> methods.sendItemTooltipMessage(online, "&cHand", item));
+            return;
         }
-        if (p.getItemInHand().getItemMeta().getDisplayName() == null || p.getItemInHand().getItemMeta() == null) {
-            itemName = p.getItemInHand().getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');;
-        } else {
-            itemName = p.getItemInHand().getItemMeta().getDisplayName();
+
+        if (item.getItemMeta().getDisplayName() == null || item.getItemMeta() == null) {
+            itemName = player.getItemInHand().getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');;
+            Bukkit.getOnlinePlayers().forEach(online -> methods.sendItemTooltipMessage(online, itemName, item));
+            return;
         }
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            methods.sendItemTooltipMessage(online, itemName, item);
-        }
+
+        itemName = player.getItemInHand().getItemMeta().getDisplayName();
+        Bukkit.getOnlinePlayers().forEach(online -> methods.sendItemTooltipMessage(online, itemName, item));
+
     }
+
 }

@@ -22,7 +22,7 @@ public class Methods {
     public String convertItemStackToJsonRegular(ItemStack itemStack) {
         net.minecraft.server.v1_8_R3.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(itemStack);
         net.minecraft.server.v1_8_R3.NBTTagCompound compound = new NBTTagCompound();
-        compound = nmsItemStack.save(compound);
+        nmsItemStack.save(compound);
         return compound.toString();
     }
 

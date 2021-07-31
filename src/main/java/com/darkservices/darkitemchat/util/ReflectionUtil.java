@@ -12,10 +12,10 @@ import java.util.Map;
 public class ReflectionUtil {
 
     private static String versionString;
-    private static Map<String, Class<?>> loadedNMSClasses = new HashMap<String, Class<?>>();
-    private static Map<String, Class<?>> loadedOBCClasses = new HashMap<String, Class<?>>();
-    private static Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<Class<?>, Map<String, Method>>();
-    private static Map<Class<?>, Map<String, Field>> loadedFields = new HashMap<Class<?>, Map<String, Field>>();
+    private static final Map<String, Class<?>> loadedNMSClasses = new HashMap<String, Class<?>>();
+    private static final Map<String, Class<?>> loadedOBCClasses = new HashMap<String, Class<?>>();
+    private static final Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<Class<?>, Map<String, Method>>();
+    private static final Map<Class<?>, Map<String, Field>> loadedFields = new HashMap<Class<?>, Map<String, Field>>();
 
     public static String getVersion() {
         if (versionString == null) {
